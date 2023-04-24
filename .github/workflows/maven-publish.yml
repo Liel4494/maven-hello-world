@@ -9,17 +9,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-        
-      - name: Set up JDK
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'oracle'
-          java-version: '20'
-          cache: 'maven'
       
       - name: Increase version patch
         working-directory: ./myapp
-        run: mvn versions:set -DnewVersion=${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion+1}
+        run: mvn build-helper:parse-version versions:set -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.$(expr \${parsedVersion.patchVersion} + 1)
         
       - name: Compile code
         working-directory: ./myapp
