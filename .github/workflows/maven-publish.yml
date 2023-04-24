@@ -11,13 +11,11 @@ jobs:
         uses: actions/checkout@v3
       
       - name: Increase version
-        working-directory: ./myapp
-        run: |
-          VERSION=$(grep -oP '(?<=<version>)[^<]+' pom.xml)
-          PATCH=$(echo $VERSION | awk -F '.' '{print $3}')
-          NEW_VERSION=$(echo $VERSION | sed "s/$PATCH/$((PATCH+1))/")
-          echo $NEW_VERSION > version.txt
-          mvn versions:set -DnewVersion=$NEW_VERSION
+        uses: chrisgahlert/maven-version@v1
+        with:
+          version-type: 'increment'
+          version-segment: 'patch'
+          update-pom: 'true'
               
       - name: Compile code
         working-directory: ./myapp
