@@ -11,6 +11,7 @@ jobs:
         uses: actions/checkout@v2
       
       - name: Increase version patch
+        run: cd /home/runner/work/maven-hello-world/maven-hello-world/myapp
         run: mvn build-helper:parse-version versions:set -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.incrementalVersion+1}
         
       - name: Compile code
