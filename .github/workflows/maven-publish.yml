@@ -11,11 +11,8 @@ jobs:
         uses: actions/checkout@v3
       
       - name: Increase version
-        run: |
-          mvn build-helper:parse-version versions:set \
-          -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.$(expr \${parsedVersion.patchVersion} + 1) \
-          versions:commit
-        working-directory: /home/runner/work/maven-hello-world/myapp/pom.xml
+        run: mvn versions:increment -DincrementalVersion=1 -DgenerateBackupPoms=false
+        working-directory: ./myapp
       
       - name: Commit changes
         run: |
