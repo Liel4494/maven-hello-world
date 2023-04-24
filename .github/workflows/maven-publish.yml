@@ -10,12 +10,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       
-      - name: Read XML value
-        run: |
-          value=$(xmllint --xpath '/root/version/text()' pom.xml)
-          echo "::set-env name=VERSION::$value"
-
-        
+      - name: Parse XML File
+        uses: actions/xml-parser@v1
+        id: xml
+        with:
+          path: /home/runner/work/maven-hello-world/maven-hello-world/myapp/pom.xml
+          xpath: /project/version
+      
+      - name: Print XML Data
+        run: echo "${{ steps.xml.outputs.result }}"
+              
       - name: Compile code
         working-directory: ./myapp
         run: mvn compile
