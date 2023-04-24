@@ -1,0 +1,28 @@
+name: Java Maven Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Increase version patch
+        run: mvn build-helper:parse-version versions:set -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.incrementalVersion+1}
+        
+      - name: Compile code
+        run: mvn compile
+        
+      - name: Package artifact
+        run: mvn package
+        
+      - name: Create artifact item
+        uses: actions/upload-artifact@v2
+        with:
+          name: my-app
+          path: target/my-app.jar
