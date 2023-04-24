@@ -10,15 +10,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       
-      - name: Parse XML File
-        uses: actions/xml-parser@v1
-        id: xml
-        with:
-          path: /home/runner/work/maven-hello-world/maven-hello-world/myapp/pom.xml
-          xpath: /project/version
-      
-      - name: Print XML Data
-        run: echo "${{ steps.xml.outputs.result }}"
+      - name: Increase version
+        run: |
+          VERSION=$(grep -oP '(?<=<version>)[^<]+' pom.xml)
+          PATCH=$(echo $VERSION | awk -F '.' '{print $3}')
+          NEW_VERSION=$(echo $VERSION | sed "s/$PATCH/$((PATCH+1))/")
+          echo $NEW_VERSION > version.txt
+          mvn versions:set -DnewVersion=$NEW_VERSION
               
       - name: Compile code
         working-directory: ./myapp
