@@ -10,15 +10,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       
-      - name: Parse XML File
-        uses: actions/xml-parser@v1
-        id: xml
+      - name: Increase version
+        uses: chrisgahlert/maven-version@v1
         with:
-          path: /home/runner/work/maven-hello-world/maven-hello-world/myapp/pom.xml
-          xpath: /project/version
-      
-      - name: Print XML Data
-        run: echo "${{ steps.xml.outputs.result }}"
+          version-type: 'increment'
+          version-segment: 'patch'
+          update-pom: 'true'
               
       - name: Compile code
         working-directory: ./myapp
