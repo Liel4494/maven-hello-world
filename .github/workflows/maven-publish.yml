@@ -1,7 +1,7 @@
 name: Java Maven Pipeline
 
 on:
-    workflow_dispatch:workflow_dispatch:
+  workflow_dispatch:
 
 jobs:
   build:
