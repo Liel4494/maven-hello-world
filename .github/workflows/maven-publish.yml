@@ -11,10 +11,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       
-      - name: Increase Jar version
-        working-directory: ./myapp
-        run: mvn validate -DbumpPatch
-      
       - name: Commit and push 
         uses: Smart-Transportation/push@v1.3
         with:
@@ -22,7 +18,6 @@ jobs:
           message: Increase patch version
           directory: ./myapp
         
-              
       - name: Compile code
         working-directory: ./myapp
         run: mvn compile
@@ -35,4 +30,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: my-app
-          path: target/my-app.jar
+          path: ./myapp
