@@ -16,7 +16,7 @@ jobs:
         run: old_version=$(mvn help:evaluate -Dexpression="project.version" -q -DforceStdout)
         
       - name: Echo version
-        run: echo $old_version
+        run: echo "$old_version"
       
       - name: Commit and push 
         uses: Smart-Transportation/push@v1.3
