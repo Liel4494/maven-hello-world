@@ -17,16 +17,14 @@ jobs:
         run:  |
           old_version=$(mvn help:evaluate -Dexpression="project.version" -q -DforceStdout)
           echo "OLD_VERSION=$old_version" >> $GITHUB_ENV
-          major=$(echo $old_versionn | cut -d '.' -f 1)
+          major=$(echo $old_version | cut -d '.' -f 1)
           minor=$(echo $old_version | cut -d '.' -f 2)
           patch=$(echo $old_version | cut -d '.' -f 3)
           echo "Before incrementing: $patch"
           patch=$((patch + 1))
-          echo "After incrementing: $patch"
-          new_version=$(printf "%d.%d.%d" $major $minor $patch)
+          new_version="${major}.${minor}.${patch}"
           echo "NEW_VERSION=$new_version" >> $GITHUB_ENV
-          echo "$NEW_VERSION"
-          
+                    
       - name: Echo version
         run: |
           echo "Old version is $OLD_VERSION"
