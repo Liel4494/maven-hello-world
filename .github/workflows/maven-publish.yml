@@ -11,7 +11,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       
-      - name: Get version
+      - name: Increase patch version
         id: version
         working-directory: ./myapp
         run:  |
@@ -20,13 +20,10 @@ jobs:
           major=$(echo $old_version | cut -d '.' -f 1)
           minor=$(echo $old_version | cut -d '.' -f 2)
           patch=$(echo $old_version | cut -d '.' -f 3)
-          echo "Before incrementing: $patch"
           patch=$((patch + 1))
           new_version="${major}.${minor}.${patch}"
           echo "NEW_VERSION=$new_version" >> $GITHUB_ENV
-                    
-      - name: Echo version
-        run: |
+          mvn versions:set -DnewVersion=$new_version
           echo "Old version is $OLD_VERSION"
           echo "New version is $NEW_VERSION"
       
