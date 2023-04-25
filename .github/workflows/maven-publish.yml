@@ -25,7 +25,7 @@ jobs:
           echo "NEW_VERSION=$new_version" >> $GITHUB_ENV
           mvn versions:set -DnewVersion=$new_version
       
-      - name: Commit and push 
+      - name: Commit and push the new version
         uses: Smart-Transportation/push@v1.3
         with:
           github_token: ${{ secrets.TOKEN }}
@@ -45,3 +45,7 @@ jobs:
         with:
           name: myapp-1.0.0.jar
           path: ./myapp/target/myapp-1.0.0.jar
+          
+      - name:  Build docker image
+        run: sudo docker build . -t my-app:$NEW_VERSION
+      
