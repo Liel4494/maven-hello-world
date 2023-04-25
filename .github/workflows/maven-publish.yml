@@ -50,5 +50,5 @@ jobs:
         run: sudo docker build . -t my-app:$NEW_VERSION
         
       - name:  Run Docker
-        run: sudo docker run my-app:1.0.1
+        run: sudo docker run my-app:$NEW_VERSION
       
