@@ -20,8 +20,10 @@ jobs:
           major=$(echo $old_versionn | cut -d '.' -f 1)
           minor=$(echo $old_version | cut -d '.' -f 2)
           patch=$(echo $old_version | cut -d '.' -f 3)
+          echo "Before incrementing: $patch"
           patch=$((patch + 1))
-          new_version="${major}.${minor}.${patch}"
+          echo "After incrementing: $patch"
+          new_version=$(printf "%d.%d.%d" $major $minor $patch)
           echo "NEW_VERSION=$new_version" >> $GITHUB_ENV
           echo "$NEW_VERSION"
           
