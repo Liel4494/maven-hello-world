@@ -17,10 +17,17 @@ jobs:
         run:  |
           old_version=$(mvn help:evaluate -Dexpression="project.version" -q -DforceStdout)
           echo "OLD_VERSION=$old_version" >> $GITHUB_ENV
-      
+          major=$(echo $old_versionn | awk -F '.' '{print $1}')
+          minor=$(echo $old_version | awk -F '.' '{print $2}')
+          patch=$(echo $old_version | awk -F '.' '{print $3}')
+          patch=$((patch + 1))
+          new_version="${major}.${minor}.${patch}"
+          echo "NEW_VERSION=$new_version" >> $GITHUB_ENV
+          
       - name: Echo version
         run: |
           echo "Old version is $OLD_VERSION"
+          echo "New version is $NEW_VERSION"
       
       - name: Commit and push 
         uses: Smart-Transportation/push@v1.3
