@@ -12,13 +12,14 @@ jobs:
         uses: actions/checkout@v3
       
       - name: Get version
+        id: version
         working-directory: ./myapp
         run:  |
           old_version=$(mvn help:evaluate -Dexpression="project.version" -q -DforceStdout)
           echo "$old_version"
       
       - name: Echo version
-        run: echo "$old_version"
+        run: echo "${{ steps.version.outputs.old_version }}"
       
       - name: Commit and push 
         uses: Smart-Transportation/push@v1.3
