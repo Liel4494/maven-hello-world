@@ -10,9 +10,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       
-      - name: Increase version
-        run: mvn versions:increment -DincrementalVersion=1 -DgenerateBackupPoms=false
-        working-directory: ./myapp
+      - name: Increase Jar version
+        run: |
+          echo "Bumping Jar version..."
+          jar_version=$(cat VERSION)
+          new_jar_version=${jar_version%.*}.$((jar_version##*.))
+          echo "New Jar version: $new_jar_version"
+          echo $new_jar_version > VERSION
       
       - name: Commit changes
         run: |
