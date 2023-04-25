@@ -16,7 +16,7 @@ jobs:
         working-directory: ./myapp
         run:  |
           old_version=$(mvn help:evaluate -Dexpression="project.version" -q -DforceStdout)
-          echo "::set-env name=OLD_VERSION::${old_version}"
+          echo "OLD_VERSION=$old_version" >> $GITHUB_ENV
       
       - name: Echo version
         run: |
