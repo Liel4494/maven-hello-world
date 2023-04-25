@@ -29,5 +29,5 @@ jobs:
       - name: Create artifact item
         uses: actions/upload-artifact@v2
         with:
-          name: my-app
-          path: ./myapp
+          name: myapp-1.0.0.jar
+          path: ./myapp/target/myapp-1.0.0.jar
