@@ -16,10 +16,11 @@ jobs:
         working-directory: ./myapp
         run:  |
           old_version=$(mvn help:evaluate -Dexpression="project.version" -q -DforceStdout)
-          echo "$old_version"
+          echo "::set-env name=OLD_VERSION::${old_version}"
       
       - name: Echo version
-        run: echo "${{ steps.version.outputs.old_version }}"
+        run: |
+          echo "Old version is $OLD_VERSION"
       
       - name: Commit and push 
         uses: Smart-Transportation/push@v1.3
