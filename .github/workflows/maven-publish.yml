@@ -11,6 +11,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       
+      - name: Get version
+        working-directory: ./myapp
+        run: old_version=mvn help:evaluate -Dexpression=project.version -q -DforceStdout
+        
+      - name: Echo version
+        run: echo old_version
+      
       - name: Commit and push 
         uses: Smart-Transportation/push@v1.3
         with:
