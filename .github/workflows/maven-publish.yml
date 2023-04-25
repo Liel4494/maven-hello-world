@@ -14,20 +14,13 @@ jobs:
         working-directory: ./myapp
         run: mvn validate -DbumpPatch
       
-      - name: Commit changes
-        working-directory: ./myapp
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add pom.xml
-          git commit -m "Bump version"
-      
-      - name: Push changes
-        uses: ad-m/github-push-action@v0.6.0
+      - name: Commit and push 
+        uses: Smart-Transportation/push@v1.3
         with:
           github_token: ${{ secrets.TOKEN }}
-          branch: main
-      
+          message: Increase patch version
+          directory: ./myapp
+        
               
       - name: Compile code
         working-directory: ./myapp
