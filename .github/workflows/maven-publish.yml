@@ -43,8 +43,8 @@ jobs:
       - name: Create artifact item
         uses: actions/upload-artifact@v2
         with:
-          name: myapp-1.0.0.jar
-          path: ./myapp/target/myapp-1.0.0.jar
+          name: myapp-${{ env.NEW_VERSION }}.jar
+          path: ./myapp/target/myapp-${{ env.NEW_VERSION }}.jar
           
       - name: Login to Docker Hub
         uses: docker/login-action@v2.1.0
@@ -58,3 +58,6 @@ jobs:
           context: .
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO_NAME }}:${{ env.NEW_VERSION }}
+          
+      - name:  Run Docker container
+        run: docker run ${{ secrets.DOCKER_USERNAME }}/myapp:$NEW_VERSION
