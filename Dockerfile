@@ -1,23 +1,11 @@
-# Define the parent image for the build stage
-FROM adoptopenjdk:11-jdk-hotspot AS build
-
-# Set the working directory of the container
-WORKDIR /app
-
-# Copy the source code to the container
-COPY . /app
-
-# Build the application and create the JAR file
-RUN ./mvnw clean package
-
-# Define the parent image for the runtime stage
+# Define the parent image
 FROM adoptopenjdk:11-jre-hotspot
 
 # Set the working directory of the container
 WORKDIR /app
 
-# Copy the JAR file from the build stage
-COPY --from=build /app/target/*.jar /app/myapp.jar
+# Copy the created JAR to the root folder
+COPY ./myapp/target/*.jar /app/myapp.jar
 
 # Create new username & group and set it as the folder owner
 RUN adduser --system --no-create-home --group myuser && \
