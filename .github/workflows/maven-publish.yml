@@ -60,4 +60,6 @@ jobs:
           tags: ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO_NAME }}:${{ env.NEW_VERSION }}
           
       - name:  Run Docker container
-        run: docker run ${{ secrets.DOCKER_USERNAME }}/myapp:$NEW_VERSION
+        run:  |
+          docker images
+          docker run ${{ secrets.DOCKER_USERNAME }}/myapp:$NEW_VERSION
